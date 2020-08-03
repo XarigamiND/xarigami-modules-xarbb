@@ -1,0 +1,58 @@
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html
+</xar:comment>
+<xar:style scope="module" module="xarbb" file="xarbb-layout" />
+<xar:set name="refreshurl">#xarVarSetCached('Meta.refresh','url', $topicreturn)#</xar:set>
+<xar:set name="refreshurl">#xarVarSetCached('Meta.refresh','time', 3)#</xar:set>
+
+<h4>
+    <a class="xar-title" href="&xar-modurl-xarbb-user-main;">
+        <xar:if condition="!empty($xarbbtitle)">
+            #$xarbbtitle#
+        <xar:else />
+            #xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# #xarModGetVar('themes', 'SiteSlogan', 0)#
+        </xar:if>
+        #xarModGetVar('themes', 'SiteTitleSeparator', 0)#
+        <xar:mlstring>Forum Index</xar:mlstring>
+    </a>
+</h4>
+
+<div class="xarbb-tablewrapper">
+    <table>
+        <tr>
+            <th scope="col">
+                <xar:mlstring>Information</xar:mlstring>
+            </th>
+        </tr>
+        <tr>
+            <td class="xar-norm">
+                <p>
+                    <xar:mlstring>Your message has been entered successfully.</xar:mlstring>
+                </p>
+                <xar:if condition="!empty($replyreturn)">
+                    <p>
+                        <a href="#$replyreturn#">
+                            <xar:mlstring>Click here to view your message.</xar:mlstring>
+                        </a>
+                    </p>
+                    <p>
+                        <a href="#$topicreturn#">
+                            <xar:mlstring>Click here to return to the topic.</xar:mlstring>
+                        </a>
+                    </p>
+                <xar:else />
+                    <p>
+                        <a href="#$topicreturn#">
+                            <xar:mlstring>Click here to view your message.</xar:mlstring>
+                        </a>
+                    </p>
+                </xar:if>
+                <p>
+                    <a href="#$forumreturn#">
+                        <xar:mlstring>Click here to return to the forum.</xar:mlstring>
+                    </a>
+                </p>
+            </td>
+        </tr>
+    </table>
+</div>

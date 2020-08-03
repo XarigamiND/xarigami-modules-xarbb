@@ -1,0 +1,213 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+<xar:comment>Stylesheet for xarBB</xar:comment>
+<xar:style module="xarbb" scope="module" file="xarbb-layout" />
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:template type="module" module="base" file="user-breadcrumb" />
+    </div>
+    <div class="xar-mod-body">
+        <div class="xar-mod-content">
+            <div class="xarbb-forumheader">
+                <xar:if condition="!empty($catid)">
+                    <div class="xarbb-noteswrapper">
+                        <xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
+                    </div>
+                </xar:if>
+                <div class="xarbb-noteswrapper">
+                    <div class="xar-sub rightnote">
+                        <div id="xarbb-topics">
+                            <ul>
+                                <li>
+                                    <a href="#xarModURL('xarbb', 'user', 'viewforumrss', array('fid' => $fid, 'theme' => 'rss'))#">
+                                        <img src="#xarTplGetImage('rss14x14.png','base')#" title="#xarML('RSS')#" alt="#xarML('RSS')#"/>&#160;<xar:mlstring>Syndicate This Forum</xar:mlstring>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#xarServerGetCurrentURL(array('read'=&gt;1))#">
+                                        <xar:mlstring>Mark All Topics as Read</xar:mlstring>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#xarModURL('xarbb', 'user', 'searchtopics', array('replies' => 1, 'fid' => $fid))#">
+                                        <xar:mlstring>View Unanswered Topics in Forum</xar:mlstring>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h1>
+                        <a class="xar-title" href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+                            #xarVarPrepForDisplay($fname)#
+                        </a>
+                    </h1>
+
+                    <div class="xarbb-topiccontrols">
+                        <xar:template file="jump-menu" type="module" subdata="array('forums'=&gt;$forums,'fid'=&gt;$fid)" />
+                    </div>
+
+                    <div class="xarbb-topiccontrols">
+                        <xar:template file="forum-topic-controls" type="module" />
+                        <div class="xar-sub rightnote">
+                            <xar:if condition="!empty($pager)">#$pager#</xar:if>
+                        </div>
+
+                    </div>
+                </div>
+
+                <xar:comment>End of top zone</xar:comment>
+            </div>
+
+
+            <xar:comment>Middle zone - the topic detail table</xar:comment>
+            <div class="xarbb-tablewrapper">
+                <table>
+                    <tr>
+                        <th style="width:4%" scope="col">
+                            <xar:mlstring>View</xar:mlstring>
+                        </th>
+                        <th style="width:30%"  scope="col">
+                            <xar:mlstring>Topic</xar:mlstring>
+                        </th>
+                        <th style="width:13%"  scope="col">
+                            <xar:mlstring>Topic Author</xar:mlstring>
+                        </th>
+                        <th scope="col" style="style:8%;text-align: center;">
+                            <xar:mlstring>Replies</xar:mlstring>
+                        </th>
+                        <th scope="col" style="style:8%;text-align: center;">
+                            <xar:mlstring>Views</xar:mlstring>
+                        </th>
+                        <th style="width:32%" scope="col">
+                            <xar:mlstring>Last Post</xar:mlstring>
+                        </th>
+                    </tr>
+
+                    <xar:loop name="$items">
+                        <tr>
+                            <td class="xar-norm icon">
+                                <xar:if condition="$loop:item.tstatus eq 5">
+                                    <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item.tpost))#">
+                                        <xar:template file="topic-icon" type="module" subdata="$loop:item.icon_flags" />
+                                    </a>
+                                <xar:else />
+                                    <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item.tid))#">
+                                        <xar:template file="topic-icon" type="module" subdata="$loop:item.icon_flags" />
+                                    </a>
+                                </xar:if>
+                            </td>
+
+                            <td class="xar-norm forumname">
+                                <xar:if condition="$loop:item.tstatus eq 5">
+                                    <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item.tpost))#">
+                                        #$loop:item.ttitle#
+                                    </a>
+                                <xar:else />
+                                    <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item.tid))#">
+                                        #$loop:item.ttitle#
+                                    </a>
+                                </xar:if>
+                                <xar:if condition="!empty($loop:item.topicpager)">
+                                    <span class="xar-sub">#$loop:item.topicpager#</span>
+                                </xar:if>
+                            </td>
+
+                            <td class="xar-accent authorname">
+                                <xar:comment>TODO: fix - Need to consider 'post as anon' as well</xar:comment>
+                                <xar:if condition="$loop:item.tposter eq $anonid">
+                                    <xar:mlstring>Anonymous</xar:mlstring>
+                                <xar:else />
+                                <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item.tposter))#">
+                                    #$loop:item.name#
+                                </a>
+                                </xar:if>
+                            </td>
+
+                            <td class="xar-accent stats" style="text-align: center;">
+                                #$loop:item.comments#
+                            </td>
+
+                            <td class="xar-accent stats" style="text-align: center;">
+                                #$loop:item.hitcount#
+                            </td>
+
+                            <td class="xar-accent lastpost">
+                                <div class="xar-sub">
+                                    <xar:if condition="!empty($loop:item.lastpostlink)">
+                                        <a href="#$loop:item.lastpostlink#">#$loop:item.lastposttitle#</a>
+                                        <xar:mlstring> on </xar:mlstring>
+                                    </xar:if>
+                                    #xarLocaleGetFormattedDate('medium', $loop:item.ttime)#
+                                    #xarLocaleGetFormattedTime('medium', $loop:item.ttime)#
+                                    <br />
+                                    <xar:mlstring> by </xar:mlstring>
+                                    <xar:comment>TODO: fix - Need to consider 'post as anon' as well</xar:comment>
+                                    <xar:if condition="$loop:item.authorid eq $anonid">
+                                        <xar:mlstring>Anonymous</xar:mlstring>
+                                    <xar:else />
+                                    <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item.authorid))#">
+                                        #$loop:item.replyname#
+                                    </a>
+                                    </xar:if>
+                                </div>
+                            </td>
+                        </tr>
+                    </xar:loop>
+                </table>
+            </div>
+
+
+            <xar:comment>Bottom zone - the topic footer</xar:comment>
+            <div class="xarbb-noteswrapper">
+                <div class="xarbb-topiccontrols">
+                    <xar:template file="forum-topic-controls" type="module" />
+
+
+                <div class="xar-sub rightnote">
+                    <xar:if condition="!empty($pager)">#$pager#</xar:if>
+                </div>
+                </div>
+            </div>
+
+
+
+            <xar:comment>Legend zone - some help information</xar:comment>
+            <div style="min-height:15em;">
+                <xar:template file="forum-legend" type="module" />
+            </div>
+            <div class="xarbb-onlinefooter">
+                    <p><strong><xar:mlstring>Users Online</xar:mlstring></strong></p>
+                    <p>
+                        <xar:ml>
+                            <xar:mlstring>Currently #(1) #(2) and #(3) #(4) online:</xar:mlstring>
+                            <xar:mlvar>#$totalmembersonline#</xar:mlvar>
+                            <xar:mlvar>#$members#</xar:mlvar>
+                            <xar:mlvar>#$totalguestsonline#</xar:mlvar>
+                            <xar:mlvar>#$guests#</xar:mlvar>
+                        </xar:ml>
+                    </p>
+                    <xar:if condition="$totalmembersonline gt 0">
+                    <ul>
+                        <li>
+                           <xar:for start="$i = 0" test="$i lt $totalmembersonline" iter="$i++">
+                                <xar:if condition="$i eq $totalmembersonline-1">
+                                    #$membersonlinenow[$i]#
+                                <xar:else />
+                                    #$membersonlinenow[$i]#,
+                                </xar:if>
+                            </xar:for>
+                        </li>
+                    </ul>
+                    </xar:if>
+
+
+                <xar:comment>Uncomment the login block if required</xar:comment>
+                <xar:comment>
+                    <div id="xarbb-loginwrapper">
+                        <xar:block module="roles" type="login" showlogout="1" />
+                    </div>
+                </xar:comment>
+            </div>
+        </div>
+    </div>
+</div>

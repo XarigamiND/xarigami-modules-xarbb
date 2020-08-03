@@ -1,0 +1,262 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var fieldRequired = Array("hottopic", "fdesc");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Hot Topic", "Forum Description");
+//-->
+</script>
+
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1><xar:mlstring>Modify configuration</xar:mlstring></h1>
+        <div class="xar-mod-content">
+            <form action="&xar-modurl-xarbb-admin-modifyconfig;&amp;phase=update" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+                <fieldset>
+                    <legend>
+                        <strong>
+                            <xar:mlstring>
+                                Global xarBB Settings
+                            </xar:mlstring>
+                        </strong>
+                    </legend>
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <div class="xar-form-input-wrapper">
+                        <label for="supportshorturls" class="xar-form-label" title="#xarML('Short URLS for forums.')#">
+                                <xar:mlstring>
+                                    Support Short Urls
+                                </xar:mlstring>
+                        </label>
+                        <xar:data-input type="checkbox" name="supportshorturls" id="supportshorturls" checked="$SupportShortURLs" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for = "usealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+                                <xar:mlstring>
+                                    Use a module alias
+                                </xar:mlstring>
+                        </label>
+                        <input type="checkbox" name="modulealias" id="modulealias" checked="$useModuleAlias" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+                                <xar:mlstring>
+                                    Module Alias Name
+                                </xar:mlstring>
+                        </label>
+                        <xar:data-input type="textbox" name="aliasname" id="aliasname" value="$aliasname" size="32" maxlength="100" />
+                    </div>
+
+                    <div class="xar-form-input-wrapper">
+                        <label for="forumsperpage" class="xar-form-label" title="#xarML('Default number of forums to show per page in admin view.')#">
+                                <xar:mlstring>
+                                    Admin Forums per Page
+                                </xar:mlstring>
+                        </label>
+                        <xar:data-input type="textbox" name="forumsperpage" id="forumsperpage" value="$forumsperpage" size="2" maxlength="4" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="xarbbtitle" class="xar-form-label" title="#xarML('Forum title for main forum listing pages.')#">
+                                <xar:mlstring>
+                                    Forum Home Link Title
+                                </xar:mlstring>
+                        </label>
+                        <xar:data-input type="textbox" name="xarbbtitle" id="xarbbtitle" value="$xarbbtitle" size="32" maxlength="100" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="xarbbonline" class="xar-form-label" title="#xarML('Show all online users')#">
+                                <xar:mlstring>
+                                    Show all online users?
+                                </xar:mlstring>
+                        </label>
+                        <xar:data-input type="checkbox" name="xarbbonline" id="xarbbonline" value="1" checked="$xarbbonline" />
+                        <xar:mlstring>If not checked, only users with optional DD property 'showonline' checked will be displayed</xar:mlstring>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        <strong>
+                            <xar:mlstring>
+                                Default Values for New Forums
+                            </xar:mlstring>
+                        </strong>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="topicsperpage" class="xar-form-label" title="#xarML('Default number of topics to show per page in a forum.')#">
+                                <xar:mlstring>
+                                    Topics per forum page view
+                                </xar:mlstring>
+                        </label>
+                        <xar:data-input type="textbox" name="topicsperpage" id="topicsperpage" value="$topicsperpage" size="2" maxlength="4" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="topicsortby" class="xar-form-label" title="#xarML('Default sort field for topics in a forum.')#">
+                                <xar:mlstring>Sort topics by</xar:mlstring>
+                        </label>
+                        <xar:data-input type="dropdown" value = "$topicsortby" id="topicsortby" name="topicsortby" validation="$topicsortbyoptions" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="topicsortorder" class="xar-form-label" title="#xarML('Default sort order for topics in a forum.')#">
+                                <xar:mlstring>Topic sort order</xar:mlstring>
+                        </label>
+                        <xar:data-input type="dropdown" name="topicsortorder" id="topicsortorder" value="$topicsortorder" validation="$sortorderoptions" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="hottopic" class="xar-form-label" title="#xarML('Default Threshhold for individual topics to be considered hot.')#">
+                                <xar:mlstring>Hot Topic</xar:mlstring>
+                        </label>
+                        <input type="text" name="hottopic" id="hottopic" value="#$hottopic#" size="2" maxlength="4" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="postsperpage" class="xar-form-label" title="#xarML('Default number of posts to show per page in a topic.')#">
+                                <xar:mlstring>Posts per topic page view</xar:mlstring>
+                        </label>
+                        <input type="text" name="postsperpage" id="postsperpage" value="#$postsperpage#" size="2" maxlength="4" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="postsortorder" class="xar-form-label"  title="#xarML('Default sort order for posts in a topic.')#">
+                                <xar:mlstring>Post sort order</xar:mlstring>
+                        </label>
+                        <xar:data-input type="dropdown" name="postsortorder" id="postsortorder" value="$postsortorder" validation="$sortorderoptions" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="allowhtml" class="xar-form-label"  title="#xarML('Default value for HTML in a new forum.')#">
+                                <xar:mlstring>Allow HTML</xar:mlstring>
+                        </label>
+                        <xar:data-input type="checkbox" name="allowhtml" id="allowhtml" checked="$allowhtml" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="allowbbcode" class="xar-form-label" title="#xarML('Default value for BBCode in a new forum.')#">
+                                <xar:mlstring>Allow BBCode</xar:mlstring>
+                        </label>
+                        <xar:if condition="xarModIsAvailable('bbcode')">
+                            <xar:data-input type="checkbox" name="allowbbcode" id="allowbbcode" checked="$allowbbcode" />
+                        <xar:else />
+                            <em><xar:mlstring>BBCode Module is not available</xar:mlstring></em>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="allowbbcode" class="xar-form-label" title="#xarML('Default value for Smilies in a new forum.')#">
+                                <xar:mlstring>Allow Smilies</xar:mlstring>
+                        </label>
+                        <xar:if condition="xarModIsAvailable('smilies')">
+                            <xar:data-input type="checkbox" name="allowsmilies" id="allowsmilies" checked="$allowsmilies" />
+                        <xar:else />
+                            <em><xar:mlstring>Smilies Module is not available</xar:mlstring></em>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="editstamp" class="xar-form-label" title="#xarML('Default value for Topic Edit Stamp use.')#">
+                                <xar:mlstring>
+                                    Use Topic Edit Stamp
+                                </xar:mlstring>
+                        </label>
+                        <xar:data-input type="dropdown" name="editstamp" id="editstamp" value="$editstamp" validation="$editstampoptions" />
+                        <xar:ml>
+                            <xar:mlstring>
+                                Stamp on replies is controlled in <a href="#(1)">Comments</a>.
+                            </xar:mlstring>
+                            <xar:mlvar>
+                                #xarModURL('comments', 'admin', 'modifyconfig', array(), Null, 'editstamp')#
+                            </xar:mlvar>
+                        </xar:ml>
+                    </div>
+                    <xar:comment> take this out for now
+                    <xar:if condition="xarModIsAvailable('newsgroups')">
+                    <div class="xar-form-input-wrapper">
+                        <label for="usenntp" class="xar-form-label" title="#xarML('Link to a NNTP server for posting.')#">
+                            <xar:mlstring>
+                                Use NNTP
+                            </xar:mlstring>
+                        </label>
+                        <xar:if condition="$usenntp">
+                            <input type="checkbox" name="usenntp" id="usenntp" checked="checked" />
+                        <xar:else />
+                            <input type="checkbox" name="usenntp" id="usenntp" value="1" />
+                        </xar:if>
+                    </div>
+                    </xar:if>
+                    </xar:comment>
+                </fieldset>
+
+                <fieldset>
+                    <legend>
+                        <xar:mlstring>
+                            Default Values for User Preferences
+                        </xar:mlstring>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="autosubscribe" class="xar-form-label" title="#xarML('Default value for automatic user subscriptions to posts')#">
+                            <xar:mlstring>
+                                Auto subscribe
+                            </xar:mlstring>
+                        </label>
+                        <select name="autosubscribe" id="autosubscribe" size="1">
+                            <xar:if condition="$autosubscribe eq 'none'">
+                               <option value="none" selected="selected"><xar:mlstring>Never</xar:mlstring></option>
+                               <option value="topics"><xar:mlstring>Own Topics</xar:mlstring></option>
+                               <option value="replies"><xar:mlstring>Replied Topics</xar:mlstring></option>
+                            <xar:elseif condition="$autosubscribe eq 'topics'" />
+                               <option value="none"><xar:mlstring>Never</xar:mlstring></option>
+                               <option value="topics" selected="selected"><xar:mlstring>Own Topics</xar:mlstring></option>
+                               <option value="replies"><xar:mlstring>Replied Topics</xar:mlstring></option>
+                            <xar:elseif condition="$autosubscribe eq 'replies'"/>
+                               <option value="none"><xar:mlstring>Never</xar:mlstring></option>
+                               <option value="topics"><xar:mlstring>Own Topics</xar:mlstring></option>
+                               <option value="replies" selected="selected"><xar:mlstring>Replied Topics</xar:mlstring></option>
+                            </xar:if>
+                        </select>
+                    </div>
+                </fieldset>
+                <xar:comment>xarBB hook only works with Articles at the moment</xar:comment>
+                <xar:if condition="($allowhtml or $allowbbcode)">
+                <fieldset>
+                    <legend>
+                        <strong>
+                            <xar:mlstring>
+                                Default xarBB Hook settings
+                            </xar:mlstring>
+                        </strong>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <p class="xar-form-input-wrapper-after"><xar:mlstring>Hook xarBB to Articles to auto create a forum topic when an article is created. Must have an article 'summary' and 'title' field.</xar:mlstring></p>
+
+                        <label for="showsourcelink" class="xar-form-label">
+                                <xar:mlstring>
+                                    Create a Souce Link
+                                </xar:mlstring>
+                        </label>
+                        <xar:data-input type="checkbox" name="showsourcelink" id="showsourcelink" checked="$showsourcelink" />
+                        <em><xar:mlstring>BBCode or HTML must be allowed to insert a link to the source article</xar:mlstring></em>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+
+                        <label for="showitemlink" class="xar-form-label" >
+                                <xar:mlstring>
+                                    Create Item Discuss Link
+                                </xar:mlstring>
+                        </label>
+                        <xar:data-input type="checkbox" name="showitemlink" id="showitemlink" checked="$showitemlink" />
+                        <em><xar:mlstring>Inserts a 'Discuss' link in the original source article to the new forum topic</xar:mlstring></em>
+                    </div>
+                </fieldset>
+                </xar:if>
+                <fieldset>
+                    <legend>
+                            <xar:mlstring>Hooks</xar:mlstring>
+                    </legend>
+                    #$hooks#
+                </fieldset>
+                <div class="xar-form-footer">
+                    <input type="submit" value="#xarML('Submit')#" />
+                 </div>
+            </form>
+        </div>
+    </div>
+</div>

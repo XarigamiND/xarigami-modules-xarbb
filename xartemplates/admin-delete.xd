@@ -1,0 +1,36 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1><xar:mlstring>Delete forum</xar:mlstring></h1>
+        <div class="xar-mod-content">
+
+          <form method="post" action="&xar-modurl-xarbb-admin-delete;" enctype="application/x-www-form-urlencoded" >
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="fid" id="fid" value="#$fid#" />
+            <input type="hidden" name="confirm" id="confirm" value="1" />
+            <input type="hidden" name="confirmation" id="confirmation" value="1" />
+            <fieldset>
+              <legend><xar:mlstring>Confirm Forum Deletion</xar:mlstring></legend>
+                <div class="xar-form-input-wrapper">
+                  <label for="confirm" class="xar-form-label" title="#xarML('Confirm deletion of forum')#">
+                    <xar:ml>
+                    <xar:mlstring>Delete forum <strong>#(1)</strong> ?</xar:mlstring>
+                    <xar:mlvar>#$forumname#</xar:mlvar>
+                    </xar:ml>
+                  </label>
+                </div>
+            </fieldset>
+            <div class="xar-form-footer">
+                <xar:set name="$mlconfirm"><xar:mlstring>Confirm</xar:mlstring></xar:set>
+                <input type="submit" value="#$mlconfirm#"  tabindex="1" />
+            </div>
+          </form>
+        </div>
+         <p> <a href="#xarModURL('xarbb','admin','view')#"><xar:mlstring>Cancel deletion of forum</xar:mlstring></a></p>
+    </div>
+</div>

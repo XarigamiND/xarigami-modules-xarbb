@@ -1,0 +1,67 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html
+Deprecated Oct 2009 - this is now handled in the admin-view template
+</xar:comment>
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1><xar:mlstring>Order xarBB Forums</xar:mlstring></h1>
+        <div class="xar-mod-content">
+            <table class="xar-items">
+                <tr>
+                    <th>
+                        <xar:mlstring>Forum Position</xar:mlstring>
+                    </th>
+                    <th>
+                        <xar:mlstring>Forum ID</xar:mlstring>
+                    </th>
+                    <th>
+                        <xar:mlstring>Forum Name</xar:mlstring>
+                    </th>
+                    <th>
+                        <xar:mlstring>Move</xar:mlstring>
+                    </th>
+                </tr>
+                <xar:set name="rowclass">'xar-norm'</xar:set>
+                <xar:set name="mup">#xarML('Move up')#</xar:set>
+                <xar:set name="mdown">#xarML('Move down')#</xar:set>
+                <xar:foreach in="$items" value="$item">
+                    <tr class="#$rowclass#">
+                        <td>
+                          #$item.calcorder#
+                        </td>
+                        <td>
+                          #$item.fid#
+                        </td>
+                        <td>
+                          #$item.fname#
+                        </td>
+                        <td class="xar-align-center">
+
+                            <xar:if condition="empty($item['upurl'])">
+                                #$item['upurl']#
+                            <xar:else />
+                                <a href="#$item['upurl']#" class="sprite xs-go-up xar-displayinline" title="#$mup#"><span>#$mup#</span></a>
+                            </xar:if>
+                            <xar:if condition="empty($item['downurl'])">
+                                #$item.downurl#
+                            <xar:else />
+                                <a href="#$item['downurl']#" class="sprite xs-go-down xar-displayinline" title="#$mdown#"><span>#$mdown#</span></a>
+                          </xar:if>
+                        </td>
+                        <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+                    </tr>
+                </xar:foreach>
+            </table>
+
+            <div class="xar-align-center xar-padding-thick">
+                <!-- add the pager here -->
+                #$pager#
+            </div>
+        </div>
+    </div>
+</div>
+

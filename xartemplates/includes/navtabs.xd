@@ -1,0 +1,35 @@
+<xar:style scope="module" module="base" file="navtabs" />
+<div>
+    <dl class="xar-tabs">
+        <dt class="help" title="#xarML('Click on a tab to display forums configuration')#">
+            <xar:mlstring>
+                Forum
+            </xar:mlstring>
+            : 
+        </dt>
+        <xar:loop name="$tabs">
+            <xar:if condition="$loop:item['fid'] eq $fid"> 
+                <dd class="active">
+                   <xar:if condition="empty($loop:item['editurl'])">
+                       #$loop:item['fname']#
+                   <xar:else />
+                        <a href="#$loop:item['editurl']#">
+                            #$loop:item['fname']#
+                        </a>
+                   </xar:if>
+                </dd>
+                <xar:else />
+                <dd>
+                   <xar:if condition="empty($loop:item['editurl'])">
+                       #$loop:item['fname']#
+                   <xar:else />
+                        <a href="#$loop:item['editurl']#">
+                            #$loop:item['fname']#
+                        </a>
+                   </xar:if>
+                </dd>
+            </xar:if>
+        </xar:loop>
+
+    </dl>
+</div>

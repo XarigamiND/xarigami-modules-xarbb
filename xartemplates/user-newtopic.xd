@@ -1,0 +1,244 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+<xar:style module="xarbb" scope="module" file="xarbb-layout" />
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<xar:comment>
+    fieldRequired = Array with names of mandatory fields
+    fieldDescription = Array with labels of mandatory fields
+</xar:comment>
+<script type="text/javascript">
+<!--
+    var fieldRequired = Array("ttitle", "tpost");
+    var fieldDescription = Array("Subject", "Body");
+//-->
+</script>
+
+<div class="xarbb-topiccontrols">
+    <span class="xar-sub">
+        <a href="#xarModURL('xarbb','user','main')#">
+            <xar:mlstring>Forum Index</xar:mlstring>
+        </a>
+        <span style="font-size: larger;">&#187;</span>
+        <a href="#xarModURL('xarbb','user','viewforum',array('fid'=>$fid))#">
+            #$fname#
+        </a>
+    </span>
+
+    <div style="clear: both;"></div>
+</div>
+
+<xar:if condition="!empty($preview)">
+    <div class="xarbb-tablewrapper">
+        <table>
+            <tr>
+                <th>
+                    <xar:mlstring>Preview</xar:mlstring>
+                </th>
+            </tr>
+
+            <tr>
+                <td class="xar-accent">
+                    <span>
+                        <xar:ml>
+                            <xar:mlstring>Posted #(1) Post subject #(2)</xar:mlstring>
+                            <xar:mlvar>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', time())#</xar:mlvar>
+                            <xar:mlvar>#$transformedtitle#</xar:mlvar>
+                        </xar:ml>
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="xar-norm">
+                    #$transformedtext#
+                    <xar:if condition="isset($properties.signature) and count($properties) gt 0">
+                        <xar:set name="$hide">#$properties.signature-&gt;value#</xar:set>
+                        <xar:if condition="$hide">
+                            <p class="hiddensignature">
+                                <xar:data-output property="$properties['signature']" />
+                            </p>
+                        </xar:if>
+                    </xar:if>
+                </td>
+            </tr>
+        </table>
+    </div>
+</xar:if>
+
+<div class="xarbb-tablewrapper">
+    <xar:comment>
+        Users can also reference uploaded files by using #file:NN# in the body,
+        if you enable the uploads hooks for xarbb (for all forums or a particular forum).
+    </xar:comment>
+    <xar:set name="enctype">'multipart/form-data'</xar:set>
+<xar:comment>Require name of post for bbcode</xar:comment>
+    <form method="post" action="#xarModURL('xarbb','user','newtopic',array('phase'=>'update'))#" id="post" name="post" enctype="#$enctype#" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <table>
+            <tr>
+                <th class="author">
+                    <xar:if condition="!isset($tid)">
+                        <xar:mlstring>Add Topic</xar:mlstring>
+                    <xar:else />
+                        <xar:mlstring>Edit Topic</xar:mlstring>
+                    </xar:if>
+                </th>
+                 <th class="message">
+                        <xar:mlstring>Message</xar:mlstring>
+                </th>
+
+            </tr>
+
+            <tr>
+                <td class="xar-accent xar-title newtopictitle">
+                    <xar:mlstring>Name:</xar:mlstring>
+                </td>
+                <td class="xar-norm newtopicfield">
+                    #xarUserGetVar('name')# /
+                    <xar:if condition="xarUserIsLoggedIn()">
+                        <a href="#xarModUrl('roles', 'user', 'account')#">
+                            <xar:mlstring>Your Account</xar:mlstring>
+                        </a>
+                    <xar:else />
+                        <a href="#xarModUrl('roles', 'user', 'account')#">
+                            <xar:mlstring>Log In | Register</xar:mlstring>
+                        </a>
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-accent xar-title newtopictitle">
+                    <xar:mlstring>Subject:</xar:mlstring>
+                </td>
+                <td class="xar-norm newtopicfield">
+                    <input type="text" name="ttitle" id="ttitle" value="#xarVarPrepForDisplay($ttitle)#" size="45" maxlength="60" tabindex="1" />
+                </td>
+            </tr>
+            <xar:if condition="$allowbbcode or $allowsmilies">
+                <tr>
+                    <td class="xar-accent xar-title newtopictitle">
+                        <xar:mlstring>Form Controls:</xar:mlstring>
+                    </td>
+                    <td class="xar-norm newtopicfield">
+                        #$formhooks.formdisplay#
+                    </td>
+                </tr>
+            </xar:if>
+
+            <tr>
+                <td class="xar-accent xar-title newtopictitle">
+                    <xar:mlstring>Body</xar:mlstring>
+                </td>
+                <td class="xar-norm newtopicfield">
+                    <textarea name="tpost" id="tpost" rows="15" cols="35" tabindex="2" onlick="storeCaret(this);">#xarVarPrepForDisplay($tpost)#</textarea>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="xar-accent xar-title newtopictitle">
+                    <xar:mlstring>Options:</xar:mlstring>
+                    <div class="xar-sub">
+                        <xar:set name="htmlcolour">$allowhtml? '<span style="color:green">'.xarML("On").'</span>':'<span style="color:red">'.xarML("Off").'</span>'</xar:set>
+                        <xar:ml>
+                            <xar:mlstring>HTML is #(1)</xar:mlstring>
+                            <xar:mlvar>#$htmlcolour#</xar:mlvar>
+                        </xar:ml>
+                        <br />
+                        <xar:set name="bbcodecolour">$allowbbcode? '<span style="color:green">'.xarML("On").'</span>':'<span style="color:red">'.xarML("Off").'</span>'</xar:set>
+                        <xar:ml>
+                            <xar:mlstring>BBCode is #(1)</xar:mlstring>
+                            <xar:mlvar>#$bbcodecolour#</xar:mlvar>
+                        </xar:ml>
+                        <br />
+                        <xar:set name="smiliescolour">$allowsmilies? '<span style="color:green">'.xarML("On").'</span>':'<span style="color:red">'.xarML("Off").'</span>'</xar:set>
+                        <xar:ml>
+                            <xar:mlstring>Smilies are #(1)</xar:mlstring>
+                            <xar:mlvar>#$smiliescolour#</xar:mlvar>
+                        </xar:ml>
+                    </div>
+                </td>
+
+                <td class="xar-norm newtopicfield">
+                    <xar:sec mask="ModxarBB" catch="false">
+                        <xar:if condition="!isset($tstatus)">
+                            <select name="tstatus" id="tstatus" size="1">
+                                <option value="0" selected="selected">
+                                    <xar:mlstring>Normal</xar:mlstring>
+                                </option>
+                                <option value="1">
+                                    <xar:mlstring>Announcement</xar:mlstring>
+                                </option>
+                                <option value="2">
+                                    <xar:mlstring>Sticky</xar:mlstring>
+                                </option>
+                            </select>
+                        <xar:else />
+                            <select name="tstatus" id="tstatus" size="1">
+                                <xar:if condition="$tstatus eq 0">
+                                    <option value="0" selected="selected">
+                                        <xar:mlstring>Normal</xar:mlstring>
+                                    </option>
+                                    <option value="1">
+                                        <xar:mlstring>Announcement</xar:mlstring>
+                                    </option>
+                                    <option value="2">
+                                        <xar:mlstring>Sticky</xar:mlstring>
+                                    </option>
+                                <xar:elseif condition="$tstatus eq 1" />
+                                    <option value="0">
+                                        <xar:mlstring>Normal</xar:mlstring>
+                                    </option>
+                                    <option value="1" selected="selected">
+                                        <xar:mlstring>Announcement</xar:mlstring>
+                                    </option>
+                                    <option value="2">
+                                        <xar:mlstring>Sticky</xar:mlstring>
+                                    </option>
+                                <xar:elseif condition="$tstatus eq 2" />
+                                    <option value="0">
+                                        <xar:mlstring>Normal</xar:mlstring>
+                                    </option>
+                                    <option value="1">
+                                        <xar:mlstring>Announcement</xar:mlstring>
+                                    </option>
+                                    <option value="2" selected="selected">
+                                        <xar:mlstring>Sticky</xar:mlstring>
+                                    </option>
+                                </xar:if>
+                            </select>
+                        </xar:if>
+                    </xar:sec>
+                   #$formhooks.formnew#
+                </td>
+            </tr>
+
+            <xar:if condition="!empty($hooks) and count($hooks) gt 0">
+                <xar:foreach in="$hooks" key="$hookmodule">
+                    <tr align="left" valign="middle">
+                        <td colspan="2">#$hooks[$hookmodule]#</td>
+                    </tr>
+                </xar:foreach>
+            </xar:if>
+        </table>
+
+        <div class="newtopicbottom">
+            <xar:if condition="isset($tid)">
+                <input type="hidden" name="tid" id="tid" value="#$tid#" />
+            </xar:if>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="fid" id="fid" value="#$fid#" />
+            <input type="hidden" name="redirect" id="redirect" value="#$redirect#" />
+            <input type="hidden" name="preview" id="submit_action"/>
+            <input type="submit" id="preview_action" name="preview_action"  onclick="document.getElementById('submit_action').value='preview'"  value="#xarML('Preview')#" />
+            &#160;
+            <input type="submit" name="submit" value="#xarML('Submit')#" tabindex="3" />
+        </div>
+    </form>
+</div>
+
+<div class="xarbb-noteswrapper">
+    <span class="xar-sub rightnote">
+        <xar:ml>
+            <xar:mlstring>All times are GMT #(1)</xar:mlstring>
+            <xar:mlvar>#xarLocaleFormatDate('%z')#</xar:mlvar>
+        </xar:ml>
+    </span>
+</div>

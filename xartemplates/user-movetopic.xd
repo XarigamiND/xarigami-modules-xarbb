@@ -1,0 +1,53 @@
+<div class="xar-sub">
+    <a href="#xarModUrl('xarbb', 'user', 'main')#">
+        #xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)#
+        #xarModGetVar('themes', 'SiteSlogan', 0)#
+        #xarModGetVar('themes', 'SiteTitleSeparator', 0)#
+        <xar:mlstring>Forum Index</xar:mlstring>
+    </a>
+    <span style="font-size: larger;">&#187;</span>
+    <xar:mlstring>Move Topic</xar:mlstring>
+</div>
+
+<h1><xar:mlstring>Confirm Topic Move</xar:mlstring></h1>
+
+<form action="#xarModURL('xarbb','user','movetopic')#" method="post" name="post" id="post">
+    <p class="xar-norm">
+        <label for="fid">
+            <xar:mlstring>Move to forum</xar:mlstring>
+        </label>
+        <select name="fid">
+            <xar:loop name="$items">
+                <xar:set name="curfid">#$loop:item.fid#</xar:set>
+                <xar:if condition="$fid ne $curfid">
+                    <option value="#$loop:item.fid#">#$loop:item.fname#</option>
+                </xar:if>
+            </xar:loop>
+        </select>
+    </p>
+
+    <p>
+        <input type="checkbox" name="shadow" checked="checked" />
+        <label for="shadow">
+            <xar:mlstring>Leave shadow topic in old forum.</xar:mlstring>
+        </label>
+    </p>
+
+    <p class="xar-norm">
+        <label for="newtitle">
+            <xar:mlstring>Shadow title</xar:mlstring>
+        </label>
+        <input type="text" name="newtitle" id="newtitle" value="#xarVarPrepForDisplay($newtitle)#" size="45" maxlength="120" />
+    </p>
+
+    <p>
+        <xar:mlstring>Are you sure you want to move the selected topic?</xar:mlstring>
+    </p>
+
+    <p>
+        <input type="hidden" name="authid" value="#$authid#" />
+        <input type="hidden" name="tid" value="#$tid#" />
+        <input type="hidden" name="phase" value="update" />
+        <input type="submit" name="confirm" value="#xarML('Submit')#" />
+    </p>
+</form>

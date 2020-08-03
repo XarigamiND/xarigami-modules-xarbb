@@ -1,0 +1,87 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1><xar:mlstring>Overview</xar:mlstring></h1>
+        <div class="xar-mod-content">
+            <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+            <h2><xar:mlstring>What is it?</xar:mlstring></h2>
+                <p>
+                    <xar:mlstring>Xarigami xarBB is build on the existing Xaraya xarbb forum module .
+                    The forum itself is very light weight, but designed to handle large volume postings, integrate smoothly into your xarigami or xaraya site,
+                    and is enhanced with further functionality using roles dynamic data and other xaraya inbuilt functionality.</xar:mlstring>
+                </p>
+
+            <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+                <p>
+                    <xar:mlstring>
+                    One of the differences between the Xarigami xarBB module and the Xaraya module is the focus on maintaining performance and security, cleaned up code, and a number of additional enhancements.
+                    Xarigami XarBB allows users to post Topics and reply posts to those topics. There are a number of options available from the administration menu.
+                    </xar:mlstring>
+                </p>
+                    <ul>
+                       <li><xar:mlstring>Add Forums -- Allows you to add new forums to your system. Each forum has a number of configuration options.</xar:mlstring></li>
+                       <li><xar:mlstring>View Forums -- Allows you to view the forums that you have configured on your system.</xar:mlstring></li>
+                       <li><xar:mlstring>Modify Configuration -- Allows you to set certain master configuration routines for forums.</xar:mlstring></li>
+                        <li><xar:mlstring>Reorder Forums -- Allows you to reorder your existing forums</xar:mlstring></li>
+                    </ul>
+
+                <p>
+                    <xar:mlstring>You can add additional functionality to xarBB forums as you require it.</xar:mlstring>
+                </p>
+                    <ul>
+                       <li><xar:mlstring>Hook BBCode or HTML or Smilies to allow formatted user input and also the option to supply linebreaks for plain text.</xar:mlstring></li>
+                       <li><xar:mlstring>Turn off modify 'stamps' in topics and posts and hook Changelog module to allow enhanced changelog management of posts and topics</xar:mlstring></li>
+                       <li><xar:mlstring>If you have imported the extra default User dynamic data such as avatars, msn, irc and so on, to your user roles, then these attributes will automatically be displayed in xarbb topics and posts.</xar:mlstring></li>
+                       <li><xar:mlstring>Set privileges for xarBB to allow or disallow viewing, posting of topics and replies, editing of their own posts by users, and setup of moderator groups.</xar:mlstring></li>
+                    </ul>
+
+                <p><xar:mlstring>Administrators and moderators have additional functionality including deleting posts, marking posts as announcements or sticky topics, moving posts, and locking topics from further postings.</xar:mlstring>
+                </p>
+                <p>
+                    <xar:mlstring>You can build the functionality you would like into xarBB and use override templates to customize every aspect of the xarBB templates.</xar:mlstring>
+                </p>
+            <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+                <p>
+                    <xar:mlstring>There is currently one block provided called Latest Posts. If the block is not
+                    showing as an option when adding a Block instance it may not have been registered. In this case
+                    please add the block type through Admin Blocks-Add Block Type</xar:mlstring>
+                </p>
+
+            <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+                <ol>
+                    <li>
+                        <strong><xar:mlstring>New/create hook:</xar:mlstring></strong><xar:mlstring> this adds specific functionality. You can hook xarbb to articles module, and on article creation the editor has an option to create a corresponding topic for discussion in a chosen forum.
+                        Once the forum is chosen, a topic with the same title as the article is created with the summary posted in the forum topic body. There are also options to
+                        allow creation of a link to the source article in the forum topic, as well as a Link in the source article to the  new forum topic. </xar:mlstring>
+                    </li>
+                    <li>
+                        <strong><xar:mlstring>Search:</xar:mlstring></strong> <xar:mlstring>If you hook xarBB to the Search module, users will be able to search through topics and posts, and more specifically for topic and post authors.</xar:mlstring>
+                    </li>
+
+                </ol>
+            <h3>
+                <xar:mlstring>Further Information</xar:mlstring>
+            </h3>
+            <p>
+                <xar:mlstring>Further information on the XarBB module can be found at</xar:mlstring>
+            </p>
+              <ul>
+                    <li>
+                        <xar:mlstring>xarigami xarBB forum project page at</xar:mlstring> <a title="#xarML('xarigami XarBB Module')#" href="http://xarigami.com/project/xarigami_xarbb">Xarigami Projects</a>.
+                    </li>
+                <li><xar:mlstring>Related tutorials and documentation on Xarigami XarBB found at</xar:mlstring> <a href="http://xarigami.com/project/xarigami_xarbb?page=resources" title="#xarML('Related documentation on Xarigami XarBB')#"><xar:mlstring>Xarigami Documentation.</xar:mlstring></a>
+                </li>
+                <li><xar:mlstring>Please log bugs and feature requests at</xar:mlstring> <a href="http://xarigami.com/contrails/displayproject/xxbb" title="#xarML('Xarigami XarBB project tracker')#"><xar:mlstring>Xaraya Xarigami XarBB project tracker.</xar:mlstring></a>
+                </li>
+              </ul>
+                 <p class="xar-sub">
+                     <strong>&nbsp;<xar:mlstring>xarBB Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.2&nbsp; 2009-12-14
+                 </p>
+        </div>
+    </div>
+</div>

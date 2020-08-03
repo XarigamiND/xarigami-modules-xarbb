@@ -1,0 +1,156 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<xar:set name="tabindex">1</xar:set>
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var fieldRequired = Array("fname", "fdesc");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Forum Name", "Forum Description");
+//-->
+</script>
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1><xar:mlstring>Add a new forum</xar:mlstring></h1>
+        <div class="xar-mod-content">
+            <xar:if condition="!empty($warning)">
+                <p>
+                    #$warning#
+                </p>
+            </xar:if>
+            <form method="post" name="post" id="post" action="#xarModURL('xarbb','admin','new',array('phase'=>'update'))#" enctype="application/x-www-form-urlencoded" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);" >
+                <fieldset>
+                    <legend>
+                        <xar:mlstring>Forum Description</xar:mlstring>
+                    </legend>
+
+                    <div class="xar-form-input-wrapper">
+                        <label for="fname" class="xar-form-label" title="#xarML('The name of the forum that you are creating.')#">
+                                <xar:mlstring>Forum name</xar:mlstring>
+                        </label>
+                        <xar:data-input type="textbox" name="fname" id="fname" value="$fname" size="32" maxlength="100" tabindex="$tabindex++"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="fdesc"  class="xar-form-label" title="#xarML('A description of the forum that you are creating.')#">
+                                <xar:mlstring>Forum Description</xar:mlstring>
+                        </label>
+                        <xar:data-input type="textarea_small" id="fdesc" name="fdesc" rows="5" cols="30" value="$fdesc" tabindex="$tabindex++"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="fstatus" class="xar-form-label" title="#xarML('The status of the forum that is being created.')#">
+                                <xar:mlstring>Forum status</xar:mlstring>
+                        </label>
+                        <xar:data-input type="dropdown" id="fstatus" name="fstatus" validation="$fstatusoptions" value="$fstatus" tabindex="$tabindex++"/>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                            <xar:mlstring>Hooks Configuration</xar:mlstring>
+                    </legend>
+                    #$hooks#
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        <xar:mlstring>Forum Configuration</xar:mlstring>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="topicsperpage" class="xar-form-label" title="#xarML('The number of topics to show per page in this forum.')#">
+                                <xar:mlstring>Topics per page</xar:mlstring>
+                        </label>
+                        <xar:data-input type="textbox" name="topicsperpage" id="topicsperpage" value="$topicsperpage" size="2" maxlength="4" tabindex="$tabindex++"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="topicsortby" class="xar-form-label" title="#xarML('The sort field for topics in this forum.')#">
+                            <xar:mlstring>Sort topics by</xar:mlstring>
+                        </label>
+                        <xar:data-input type="dropdown" name="topicsortyby" id="topicsortby" value="$topicsortby" validation="$topicsortoptions" tabindex="$tabindex++"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="topicsortorder" class="xar-form-label" title="#xarML('The field sort order for topics in this forum.')#">
+                            <xar:mlstring>Topic ordering by</xar:mlstring>
+                        </label>
+                        <xar:data-input type="dropdown" name="topicsortorder" id="topicsortorder" value="$topicsortorder" validation="$topicorderoptions" tabindex="$tabindex++"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="hottopic" class="xar-form-label" title="#xarML('Threshhold for individual topics to be considered hot.')#">
+                            <xar:mlstring>Hot Topic</xar:mlstring>
+                        </label>
+                        <xar:data-input type="textbox" name="hottopic" id="hottopic" value="$hottopic" size="2" maxlength="4" tabindex="$tabindex++"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="postsperpage" class="xar-form-label" title="#xarML('The number of posts to show per page in each topic.')#">
+                            <xar:mlstring>Posts per page</xar:mlstring>
+                        </label>
+                        <xar:data-input type="textbox" name="postsperpage" id="postsperpage" value="$postsperpage" size="2" maxlength="4" tabindex="$tabindex++"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="postsortorder" class="xar-form-label" title="#xarML('The sort order for posts in each topic.')#">
+                            <xar:mlstring>Post ordering by</xar:mlstring>
+                        </label>
+                        <xar:data-input type="dropdown" name="postsortorder" id="postsortorder" value="$postsortorder" validation="$topicorderoptions" tabindex="$tabindex++"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="allowhtml"  class="xar-form-label" title="#xarML('Allow HTML in this forum.')#">
+                                <xar:mlstring>Allow HTML</xar:mlstring>
+                        </label>
+                        <xar:data-input type="checkbox" name="allowhtml" id="allowhtml" checked="$allowhtml" tabindex="$tabindex++"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="allowbbcode" class="xar-form-label" title="#xarML('Allow BBCode use in this forum.')#">
+                            <xar:mlstring>Allow BBCode</xar:mlstring>
+                        </label>
+                        <xar:if condition="xarModIsAvailable('bbcode')">
+                            <xar:data-input type="checkbox" name="allowbbcode" id="allowbbcode" checked="$allowbbcode" tabindex="$tabindex++"/>
+                        <xar:else />
+                            <em><xar:mlstring>BBCode Module is not available.</xar:mlstring></em>
+                        </xar:if>
+                    </div>
+
+                    <div class="xar-form-input-wrapper">
+                        <label for="allowsmilies" class="xar-form-label" title="#xarML('Allow Smilies use in this forum.')#">
+                            <xar:mlstring>Allow Smilies</xar:mlstring>
+                        </label>
+                        <xar:if condition="xarModIsAvailable('smilies')">
+                            <xar:data-input type="checkbox" name="allowsmilies" id="allowsmilies" checked="$allowsmilies" tabindex="$tabindex++"/>
+                        <xar:else />
+                            <em><xar:mlstring>SmiliesModule is not available.</xar:mlstring></em>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="editstamp" class="xar-form-label" title="#xarML('Default value for Topic Edit Stamp use.')#">
+                                <xar:mlstring>
+                                    Use Topic Edit Stamp?
+                                </xar:mlstring>
+                        </label>
+                        <xar:data-input type="dropdown" id="editstamp" name="editstame" validation="$editstampoptions" value="$editstamp" tabindex="$tabindex++"/>
+                    </div>
+                    <xar:if condition="$usenntp">
+                       <div class="xar-form-input-wrapper">
+                            <label for="nntp" class="xar-form-label" title="#xarML('Associate with which Newsgroup')#">
+                                <xar:mlstring>NNTP Association</xar:mlstring>
+                            </label>
+                            <select name="nntp" id="nntp" tabindex="$tabindex++">
+                                <xar:foreach in="$items" key="$name" value="$info">
+                                    <xar:if condition="!empty($selected) and in_array($name,$selected)">
+                                        <option value="#$name#" selected="selected">#$name#</option>
+                                    <xar:else/>
+                                        <option value="#$name#">#$name#</option>
+                                    </xar:if>
+                                </xar:foreach>
+                            </select>
+                        </div>
+                    </xar:if>
+                </fieldset>
+                <div class="xar-form-footer">
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="submit" value="#xarML('Submit')#" tabindex="#$tabindex++#"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

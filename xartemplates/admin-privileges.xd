@@ -1,0 +1,66 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:set name="pagetitle"><xar:mlstring>Privileges Administration</xar:mlstring></xar:set>
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" subdata="array('menumod'=&gt;'privileges')"/>
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1><xar:ml><xar:mlstring>Select Forums for Privilege '#(1)'</xar:mlstring><xar:mlvar>#$extname#</xar:mlvar></xar:ml></h1>
+        <div class="xar-mod-content">
+
+            <form method="post" action="&xar-modurl-xarbb-admin-privileges;">
+                <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
+                <input type="hidden" name="extname" id="extname" value="#$extname#" />
+                <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
+                <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
+                <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
+                <fieldset>
+                <div class="xar-form-input-wrapper">
+                    <label for="cats" class="xar-form-label"><xar:mlstring>Category</xar:mlstring></label>
+                        <xar:foreach in="$cats" key="$catid">
+                            <div>#$cats[$catid]#</div>
+                        </xar:foreach>
+                </div>
+
+                <div class="xar-form-input-wrapper">
+                    <label for="fid" class="xar-form-label"><xar:mlstring>Forum</xar:mlstring></label>
+                        <!-- TODO: show dropdown box for all relevant articles (if not too many) -->
+                        <select name="fid" id="fid" >
+                            <option value="All">All(-)</option>
+                            <xar:foreach in="$fids" value="$forum">
+                                <xar:if condition="$forum['fid'] eq $fid">
+                                    <option value="#$forum['fid']#" selected="selected">#$forum['fname']#(#$forum['fid']#)</option>
+                                <xar:else />
+                                    <option value="#$forum['fid']#">#$forum['fname']#(#$forum['fid']#)</option>
+                                </xar:if>
+                            </xar:foreach>
+                        </select>
+                </div>
+
+                 <div class="xar-form-input-wrapper">
+                    <label for="extlevel" class="xar-form-label"><xar:mlstring>Access Level</xar:mlstring></label>
+                        <xar:data-input type="dropdown" value="$extlevel" validation="$levelvalues" name="extlevel" id="extlevell"  />
+                </div>
+                 <div class="xar-form-input-wrapper-after">
+                    <input type="submit" value="#$refreshlabel#" />
+                </div>
+                </fieldset>
+                <div class="xar-form-footer">
+
+                    <p>
+                        <xar:ml>
+                            <xar:mlstring>There are #(1) forums matching these selection criteria at the moment</xar:mlstring>
+                            <xar:mlvar>#$numitems#</xar:mlvar>
+                        </xar:ml>
+                    </p>
+
+
+                    <p>(Instance Definition #$extinstance#)</p>
+                    <p><input type="submit" name="apply" value="#$applylabel#" /></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
