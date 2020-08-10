@@ -67,17 +67,9 @@
             <h3>
                 <xar:mlstring>Further Information</xar:mlstring>
             </h3>
-            <p>
-                <xar:mlstring>Further information on the XarBB module can be found at</xar:mlstring>
-            </p>
               <ul>
-                    <li>
-                        <xar:mlstring>xarigami xarBB forum project page at</xar:mlstring> <a title="#xarML('xarigami XarBB Module')#" href="http://xarigami.com/project/xarigami_xarbb">Xarigami Projects</a>.
-                    </li>
-                <li><xar:mlstring>Related tutorials and documentation on Xarigami XarBB found at</xar:mlstring> <a href="http://xarigami.com/project/xarigami_xarbb?page=resources" title="#xarML('Related documentation on Xarigami XarBB')#"><xar:mlstring>Xarigami Documentation.</xar:mlstring></a>
-                </li>
-                <li><xar:mlstring>Please log bugs and feature requests at</xar:mlstring> <a href="http://xarigami.com/contrails/displayproject/xxbb" title="#xarML('Xarigami XarBB project tracker')#"><xar:mlstring>Xaraya Xarigami XarBB project tracker.</xar:mlstring></a>
-                </li>
+                <li><a href="http://xarigami.org/project/xarigami_xarbb"><xar:mlstring>Xarigami XarBB project page</xar:mlstring></a></li>
+                <li><a href="http://xarigami.org/contrails/displayproject/xxbb"><xar:mlstring>Xarigami XarBB issue tracker</xar:mlstring></a></li>
               </ul>
                  <p class="xar-sub">
                      <strong>&nbsp;<xar:mlstring>xarBB Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.2&nbsp; 2009-12-14
